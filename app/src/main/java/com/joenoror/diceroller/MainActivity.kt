@@ -2,6 +2,7 @@ package com.joenoror.diceroller
 
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -19,22 +20,43 @@ class MainActivity : AppCompatActivity() {
             rollDice()
         }
 
+        rollDice()
+
     }
 
     private fun rollDice() {
         //Create a dice object
         val dice = Dice(6)
-        val dice2 = Dice(10)
         val textView:TextView = findViewById(R.id.textView)
-        val textView2:TextView = findViewById(R.id.textView2)
-        showTheScreen(textView,dice)
-        showTheScreen(textView2,dice2)
+        val imageView: ImageView = findViewById(R.id.imageView)
+        showTheScreen(textView,imageView,dice)
+
+
+
+        //Another dice object
+        //val dice2 = Dice(10)
+        //val textView2:TextView = findViewById(R.id.textView2)
+        //showTheScreen(textView2,dice2)
 
     }
 
-    private fun showTheScreen(textView: TextView, dice: Dice){
+    private fun showTheScreen(textView: TextView,imageView: ImageView,dice: Dice){
         val diceRoll = dice.roll()
         textView.text = diceRoll.toString()
+        //Si el dado es de 6 caras, cambio la imagen ya que la tenemos
+        if(dice.numSides ==6){
+            val drawableResource = when(diceRoll){
+                1-> R.drawable.dice_1
+                2-> R.drawable.dice_2
+                3-> R.drawable.dice_3
+                4-> R.drawable.dice_4
+                5-> R.drawable.dice_5
+                else-> R.drawable.dice_6
+            }
+            imageView.setImageResource(drawableResource)
+            imageView.contentDescription = diceRoll.toString()
+        }
+
     }
 }
 
